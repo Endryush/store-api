@@ -1,0 +1,1 @@
+2024-03-19T23:48:07.997Z [Store API] error Error processing request: POST -  - Os campos nome, cpf, email e addres são todos obrigatórios
