@@ -30,9 +30,9 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 app.use('/client', clientsRouter)
+app.use('/supplier', suppliersRouter)
 app.use('/product', productsRouter)
 app.use('/sale', salesRouter)
-app.use('/supplier', suppliersRouter)
 
 app.use((error, req, res, next) => {
   logger.error(`Error processing request: ${req.method} - ${req.baseUrl} - ${error.message}`)
