@@ -1,1 +1,5 @@
 2024-03-19T23:48:07.997Z [Store API] error Error processing request: POST -  - Os campos nome, cpf, email e addres são todos obrigatórios
+2024-03-20T00:17:34.044Z [Store API] error Error processing request: POST -  - Os campos nome, cpf, email e addres são todos obrigatórios
+2024-03-20T00:18:22.297Z [Store API] error Error processing request: POST -  - loggers is not defined
+2024-03-20T00:20:35.323Z [Store API] error Error processing request: POST -  - loggers is not defined
+2024-03-20T00:21:28.013Z [Store API] info POST EM /CLIENT {"name":"name1","cpf":"23223233","phone":"5544555554444","email":"email@email.com","address":"Rua dos bobos, n 0"}

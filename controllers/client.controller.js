@@ -9,7 +9,7 @@ async function createClient (req, res, next) {
     }
 
     res.status(201).send(await ClientService.createClient(client))
-    loggers.info(`POST EM /CLIENT ${JSON.stringify(client)}`)
+    logger.info(`POST EM /CLIENT ${JSON.stringify(client)}`)
   } catch (error) {
     next(error)
   }
