@@ -3,3 +3,7 @@
 2024-03-20T00:18:22.297Z [Store API] error Error processing request: POST -  - loggers is not defined
 2024-03-20T00:20:35.323Z [Store API] error Error processing request: POST -  - loggers is not defined
 2024-03-20T00:21:28.013Z [Store API] info POST EM /CLIENT {"name":"name1","cpf":"23223233","phone":"5544555554444","email":"email@email.com","address":"Rua dos bobos, n 0"}
+2024-03-20T22:16:15.720Z [Store API] info POST EM /CLIENT {"name":"name1","cpf":"23223233","phone":"5544555554444","email":"email@email.com","address":"Rua dos bobos, n 0"}
+2024-03-20T22:16:39.221Z [Store API] error Error processing request: POST -  - easa
+2024-03-20T22:16:58.964Z [Store API] error Error processing request: POST -  - next is not defined
+2024-03-20T22:17:05.013Z [Store API] error Error processing request: POST -  - easa
