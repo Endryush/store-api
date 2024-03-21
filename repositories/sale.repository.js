@@ -1,10 +1,10 @@
 import { connect } from "./db.js"
 
-async function insertClient (client) {
+async function insertSale (sale) {
   const connection = await connect()
   try {
-    const sql = 'INSERT INTO clients (name, cpf, phone, email, address) VALUES ($1, $2, $3, $4, $5) RETURNING *'
-    const values = [client.name, client.cpf, client.phone, client.email, client.address]
+    const sql = 'INSERT INTO sales (value, date, client_id, product_id) VALUES ($1, $2, $3, $4) RETURNING *'
+    const values = [sale.value, sale.date, sale.client_id, sale.product_id]
     const response = await connection.query(sql, values)
   
     return response?.rows?.[0]
@@ -15,10 +15,10 @@ async function insertClient (client) {
   }
 }
 
-async  function getAllClients () {
+async  function getAllSales () {
   const connection = await connect()
   try {
-    const response = await connection.query('SELECT * FROM clients')
+    const response = await connection.query('SELECT * FROM sales')
 
     return  response.rows
   } catch (error) {
@@ -28,10 +28,10 @@ async  function getAllClients () {
   }
 }
 
-async  function getClient (id) {
+async  function getSale (id) {
   const connection = await connect()
   try {
-    const response = await connection.query(`SELECT * FROM clients WHERE client_id=$1`,[id])
+    const response = await connection.query(`SELECT * FROM sales WHERE sale_id=$1`,[id])
 
     return response?.rows?.[0]
   } catch (error) {
@@ -41,11 +41,11 @@ async  function getClient (id) {
   }
 }
 
-async  function updateClient (client) {
+async  function updateSale (sale) {
   const connection = await connect()
   try {
-    const sql = 'UPDATE clients SET name = $1, cpf= $2, phone = $3, email = $4, address = $5 WHERE client_id=$6 RETURNING *'
-    const values = [client.name, client.cpf, client.phone, client.email, client.address, client.client_id]
+    const sql = 'UPDATE sales SET value = $1, date= $2, client_id = $3 WHERE sale_id=$4 RETURNING *'
+    const values = [sale.value, sale.date, sale.client_id, sale.sale_id]
     const response = await connection.query(sql, values)
   
     return response?.rows?.[0]
@@ -56,10 +56,10 @@ async  function updateClient (client) {
   }
 }
 
-async  function deleteClient (id) {
+async  function deleteSale (id) {
   const connection = await connect()
   try {
-    const r = await connection.query(`DELETE FROM clients WHERE client_id=$1`,[id])
+    const r = await connection.query(`DELETE FROM sales WHERE sale_id=$1`,[id])
 
     return {
       'message': 'Deleted successfully',
@@ -72,9 +72,9 @@ async  function deleteClient (id) {
 }
 
 export default {
-  insertClient,
-  getAllClients,
-  getClient,
-  updateClient,
-  deleteClient
+  insertSale,
+  getAllSales,
+  getSale,
+  updateSale,
+  deleteSale
 }

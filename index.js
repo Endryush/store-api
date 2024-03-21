@@ -35,8 +35,8 @@ app.use('/product', productsRouter)
 app.use('/sale', salesRouter)
 
 app.use((error, req, res, next) => {
-  logger.error(`Error processing request: ${req.method} - ${req.baseUrl} - ${error.message}`)
-  res.status(400).send({ error: error.message })
+  logger.error(`Error processing request: ${req.method} - ${req.baseUrl} - ${error.message ?? JSON.stringify(error)}`)
+  res.status(400).send({ error: error.message ?? error })
 })
 
 app.listen(3000, () => console.log('API started on port 3000'))

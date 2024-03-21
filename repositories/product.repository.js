@@ -33,7 +33,7 @@ async  function getProduct (id) {
   try {
     const response = await connection.query(`SELECT * FROM products WHERE product_id=$1`,[id])
 
-    return response?.rows?.[0] ?? 'Product not found'
+    return response?.rows?.[0]
   } catch (error) {
     throw error;
   } finally {

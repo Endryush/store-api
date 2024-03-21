@@ -27,8 +27,10 @@ async function  getAllClients (req, res, next) {
 async function getClient (req, res, next) {
   try {
     const { id } = req.params
+    const response = await ClientService.getClient(id)
 
-    res.status(200).send(await ClientService.getClient(id))
+    if (!response)  res.status(404).send({ message: 'Client not found' })
+    res.status(200).send(response)
     logger.info('GET /client by ID')
   } catch (error) {
     next(error)

@@ -27,8 +27,11 @@ async function  getAllSuppliers (req, res, next) {
 async function getSupplier (req, res, next) {
   try {
     const { id } = req.params
+    const response = await SupplierService.getSupplier(id)
+    
+    if (!response)  res.status(404).send({ message: 'Supplier not found' })
 
-    res.status(200).send(await SupplierService.getSupplier(id))
+    res.status(200).send(response)
     logger.info('GET /supplier by ID')
   } catch (error) {
     next(error)
