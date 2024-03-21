@@ -15,7 +15,7 @@ async function insertSale (sale) {
   }
 }
 
-async  function getAllSales () {
+async  function getSales () {
   const connection = await connect()
   try {
     const response = await connection.query('SELECT * FROM sales')
@@ -56,6 +56,19 @@ async  function updateSale (sale) {
   }
 }
 
+async function getSalesByProductId (productId) {
+   const connection = await connect()
+   try {
+    const response = await connection.query('SELECT * FROM sales WHERE product_id = $1', [productId]);
+    
+    return response.rows
+   } catch (error) {
+    throw error
+   } finally {
+    connection.release()
+   }
+}
+
 async  function deleteSale (id) {
   const connection = await connect()
   try {
@@ -73,8 +86,9 @@ async  function deleteSale (id) {
 
 export default {
   insertSale,
-  getAllSales,
+  getSales,
   getSale,
   updateSale,
-  deleteSale
+  deleteSale,
+  getSalesByProductId
 }

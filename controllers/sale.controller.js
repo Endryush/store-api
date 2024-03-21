@@ -15,9 +15,9 @@ async function createSale (req, res, next) {
   }
 }
 
-async function  getAllSales (req, res, next) {
+async function  getSales (req, res, next) {
   try {
-    res.status(200).send(await SaleService.getAllSales())
+    res.status(200).send(await SaleService.getSales(req.query.product_id))
     logger.info('GET /sales')
   } catch (error) {
     next(error)
@@ -69,7 +69,7 @@ async function deleteSale (req, res, next) {
 
 export default {
   createSale,
-  getAllSales,
+  getSales,
   getSale,
   updateSale,
   deleteSale

@@ -2,8 +2,8 @@ import SaleRepository from "../repositories/sale.repository.js"
 import ClientRepository from "../repositories/client.repository.js"
 import ProductRepository from "../repositories/product.repository.js"
 
-async function getAllSales () {
-  return await SaleRepository.getAllSales()
+async function getSales (productId) {
+  return productId ? await SaleRepository.getSalesByProductId(productId) : await SaleRepository.getSales()
 }
 // validar se tem estoque e diminuir estoque
 async function createSale (sale) {
@@ -62,7 +62,7 @@ async function hasErrors (sale, isUpdating = false) {
   return errors
 }
 export default {
-  getAllSales,
+  getSales,
   createSale,
   getSale,
   updateSale,
