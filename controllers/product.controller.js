@@ -39,7 +39,7 @@ async function updateProduct (req, res, next) {
   try {
     const product = req.body
   
-    if (!product.name || !product.description || !product.value || !product.stock || !product.supplier_id) {
+    if (!product.name || !product.description || !product.value || !product.stock || !product.supplier_id || !product.product_id) {
       throw new Error('Todos os campos são obrigatórios')
     }
 

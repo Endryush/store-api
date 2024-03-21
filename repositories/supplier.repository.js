@@ -33,7 +33,7 @@ async  function getSupplier (id) {
   try {
     const response = await connection.query(`SELECT * FROM suppliers WHERE supplier_id=$1`,[id])
 
-    return response?.rows?.[0] ?? 'Supplier not found'
+    return response?.rows?.[0]
   } catch (error) {
     throw error;
   } finally {
