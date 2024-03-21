@@ -5,7 +5,7 @@ async function createClient (req, res, next) {
     const client = req.body
   
     if (!client.name || !client.cpf || !client.phone || !client.email || !client.address) {
-      throw new Error('Os campos nome, cpf, email e addres são todos obrigatórios')
+      throw new Error('Os campos name, cpf, phone, email e address são todos obrigatórios')
     }
 
     res.status(201).send(await ClientService.createClient(client))

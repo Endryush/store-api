@@ -5,7 +5,7 @@ async function createSupplier (req, res, next) {
     const supplier = req.body
   
     if (!supplier.name || !supplier.cnpj || !supplier.phone || !supplier.email || !supplier.address) {
-      throw new Error('Os campos nome, cnpj, email e addres são todos obrigatórios')
+      throw new Error('Os campos name, cnpj, email, phone e address são todos obrigatórios')
     }
 
     res.status(201).send(await SupplierService.createSupplier(supplier))
