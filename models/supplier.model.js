@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize'
 import db from '../repositories/db.js'
 
-const Supplier = db.define('supliers', {
-  suppllierId: {
+const Supplier = db.define('suppliers', {
+  supplierId: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,

@@ -1,73 +1,52 @@
-import { connect } from "./db.js"
+import Supplier from '../models/supplier.model.js'
 
 async function insertSupplier (supplier) {
-  const connection = await connect()
   try {
-    const sql = 'INSERT INTO suppliers (name, cnpj, phone, email, address) VALUES ($1, $2, $3, $4, $5) RETURNING *'
-    const values = [supplier.name, supplier.cnpj, supplier.phone, supplier.email, supplier.address]
-    const response = await connection.query(sql, values)
-  
-    return response?.rows?.[0]
+    return await Supplier.create(supplier)
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
-async  function getAllSuppliers () {
-  const connection = await connect()
+async function getAllSuppliers () {
   try {
-    const response = await connection.query('SELECT * FROM suppliers')
-
-    return  response.rows
+    return await Supplier.findAll()
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
-async  function getSupplier (id) {
-  const connection = await connect()
+async function getSupplier (id) {
   try {
-    const response = await connection.query(`SELECT * FROM suppliers WHERE supplier_id=$1`,[id])
-
-    return response?.rows?.[0]
+    return await Supplier.findByPk(id)
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
-async  function updateSupplier (supplier) {
-  const connection = await connect()
+async function updateSupplier (supplier) {
   try {
-    const sql = 'UPDATE suppliers SET name = $1, cnpj= $2, phone = $3, email = $4, address = $5 WHERE supplier_id=$6 RETURNING *'
-    const values = [supplier.name, supplier.cnpj, supplier.phone, supplier.email, supplier.address, supplier.supplier_id]
-    const response = await connection.query(sql, values)
-  
-    return response?.rows?.[0]
+    await Supplier.update(supplier, {
+      where: { supplierId: supplier.supplierId }
+    })
+
+    return await getSupplier(supplier.supplierId)
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
-async  function deleteSupplier (id) {
-  const connection = await connect()
+async function deleteSupplier (id) {
   try {
-    const r = await connection.query(`DELETE FROM suppliers WHERE supplier_id=$1`,[id])
+    await Supplier.destroy({
+      where: { supplierId: id }
+    })
 
     return {
       'message': 'Deleted successfully',
     }
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 

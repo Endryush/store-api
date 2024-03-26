@@ -1,86 +1,77 @@
-import { connect } from "./db.js"
+import Product from '../models/product.model.js'
+import Sale from '../models/sale.model.js'
 
 async function insertSale (sale) {
-  const connection = await connect()
   try {
-    const sql = 'INSERT INTO sales (value, date, client_id, product_id) VALUES ($1, $2, $3, $4) RETURNING *'
-    const values = [sale.value, sale.date, sale.client_id, sale.product_id]
-    const response = await connection.query(sql, values)
-  
-    return response?.rows?.[0]
+    return await Sale.create(sale) 
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
-async  function getSales () {
-  const connection = await connect()
+async function getSales () {
   try {
-    const response = await connection.query('SELECT * FROM sales')
-
-    return  response.rows
+    return await Sale.findAll({
+      include: [
+        {
+          model: Product
+        }
+      ]
+    })
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
-async  function getSale (id) {
-  const connection = await connect()
+async function getSale (id) {
   try {
-    const response = await connection.query(`SELECT * FROM sales WHERE sale_id=$1`,[id])
-
-    return response?.rows?.[0]
+    return await Sale.findByPk(id)
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
-async  function updateSale (sale) {
-  const connection = await connect()
+async function updateSale (sale) {
   try {
-    const sql = 'UPDATE sales SET value = $1, date= $2, client_id = $3 WHERE sale_id=$4 RETURNING *'
-    const values = [sale.value, sale.date, sale.client_id, sale.sale_id]
-    const response = await connection.query(sql, values)
-  
-    return response?.rows?.[0]
+    await Sale.update(
+      {
+        value: sale.value,
+        date: sale.date,
+        clientId: sale.clientId,
+      }, 
+      {
+      where: { saleId: sale.saleId },
+      }
+    )
+
+    return await getSale(sale.saleId)
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
 async function getSalesByProductId (productId) {
-   const connection = await connect()
    try {
-    const response = await connection.query('SELECT * FROM sales WHERE product_id = $1', [productId]);
-    
-    return response.rows
-   } catch (error) {
+    return await Sale.findAll({
+      where: { productId },
+      include: [ {  model: Product } ]
+    })
+  } catch (error) {
     throw error
-   } finally {
-    connection.release()
-   }
+  }
 }
 
-async  function deleteSale (id) {
-  const connection = await connect()
+async function deleteSale (id) {
   try {
-    const r = await connection.query(`DELETE FROM sales WHERE sale_id=$1`,[id])
+    await Sale.destroy({
+      where: { saleId: id }
+    })
 
     return {
       'message': 'Deleted successfully',
     }
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 

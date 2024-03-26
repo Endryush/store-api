@@ -15,7 +15,7 @@ async function createSupplier (req, res, next) {
   }
 }
 
-async function  getAllSuppliers (req, res, next) {
+async function getAllSuppliers (req, res, next) {
   try {
     res.status(200).send(await SupplierService.getAllSuppliers())
     logger.info('GET /suppliers')
@@ -42,7 +42,7 @@ async function updateSupplier (req, res, next) {
   try {
     const supplier = req.body
   
-    if (!supplier.supplier_id  || !supplier.name || !supplier.cnpj || !supplier.phone || !supplier.email || !supplier.address) {
+    if (!supplier.supplierId  || !supplier.name || !supplier.cnpj || !supplier.phone || !supplier.email || !supplier.address) {
       throw new Error('Todos os campos são obrigatórios')
     }
 

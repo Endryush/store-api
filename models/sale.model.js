@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../repositories/db.js'
 import Product from './product.model.js'
-import Client from './client.model'
+import Client from './client.model.js'
 
 const Sale = db.define('sales', {
   saleId: {

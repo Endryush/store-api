@@ -4,8 +4,8 @@ async function createProduct (req, res, next) {
   try {
     const product = req.body
   
-    if (!product.name || !product.description || !product.value || !product.stock || !product.supplier_id) {
-      throw new Error('Os campos name, description, value, stock e supplier_id são todos obrigatórios')
+    if (!product.name || !product.description || !product.value || !product.stock || !product.supplierId) {
+      throw new Error('Os campos name, description, value, stock e supplierId são todos obrigatórios')
     }
 
     res.status(201).send(await ProductService.createProduct(product))
@@ -15,7 +15,7 @@ async function createProduct (req, res, next) {
   }
 }
 
-async function  getAllProducts (req, res, next) {
+async function getAllProducts (req, res, next) {
   try {
     res.status(200).send(await ProductService.getAllProducts())
     logger.info('GET /products')
@@ -43,7 +43,7 @@ async function updateProduct (req, res, next) {
   try {
     const product = req.body
   
-    if (!product.name || !product.description || !product.value || !product.stock || !product.supplier_id || !product.product_id) {
+    if (!product.name || !product.description || !product.value || !product.stock || !product.supplierId || !product.productId) {
       throw new Error('Todos os campos são obrigatórios')
     }
 

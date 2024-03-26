@@ -11,7 +11,7 @@ async function createSale (sale) {
 
   if (errors.length > 0) throw errors
 
-  const product = await ProductRepository.getProduct(sale.product_id)
+  const product = await ProductRepository.getProduct(sale.productId)
 
   if (product.stock <= 0) throw new Error('Product has no stock') 
   
@@ -38,7 +38,7 @@ async function deleteSale (id) {
 
   if (!sale) throw new Error('Sale not found')
 
-  const product = await ProductRepository.getProduct(sale.product_id)
+  const product = await ProductRepository.getProduct(sale.productId)
   product.stock++
   await ProductRepository.updateProduct(product)
 
@@ -47,14 +47,14 @@ async function deleteSale (id) {
 
 async function hasErrors (sale, isUpdating = false) {
   const errors = []
-  const client = await ClientRepository.getClient(sale.client_id)
+  const client = await ClientRepository.getClient(sale.clientId)
   if (!client) errors.push({ product_error: 'Client not found' })
 
-  const product = await ProductRepository.getProduct(sale.product_id)
+  const product = await ProductRepository.getProduct(sale.productId)
   if (!product) errors.push({ product_error: 'Product not found' })
   
   if (isUpdating) {
-    const updatingSale = await SaleRepository.getSale(sale.sale_id)
+    const updatingSale = await SaleRepository.getSale(sale.saleId)
 
     if (!updatingSale) errors.push({ sale_error: 'Sale not found' })
   }

@@ -4,8 +4,8 @@ async function createSale (req, res, next) {
   try {
     const sale = req.body
   
-    if (!sale.value || !sale.date || !sale.client_id || !sale.product_id) {
-      throw new Error('Os campos value, date, client_id product_id são todos obrigatórios')
+    if (!sale.value || !sale.date || !sale.clientId || !sale.productId) {
+      throw new Error('Os campos value, date, clientId productId são todos obrigatórios')
     }
 
     res.status(201).send(await SaleService.createSale(sale))
@@ -15,9 +15,9 @@ async function createSale (req, res, next) {
   }
 }
 
-async function  getSales (req, res, next) {
+async function getSales (req, res, next) {
   try {
-    res.status(200).send(await SaleService.getSales(req.query.product_id))
+    res.status(200).send(await SaleService.getSales(req.query.productId))
     logger.info('GET /sales')
   } catch (error) {
     next(error)
@@ -43,7 +43,7 @@ async function updateSale (req, res, next) {
   try {
     const sale = req.body
   
-    if (!sale.value || !sale.date || !sale.client_id || !sale.product_id || !sale.sale_id) {
+    if (!sale.value || !sale.date || !sale.clientId || !sale.productId || !sale.saleId) {
       throw new Error('Todos os campos são obrigatórios')
     }
 

@@ -1,73 +1,52 @@
-import { connect } from "./db.js"
+import Client from '../models/client.model.js'
 
 async function insertClient (client) {
-  const connection = await connect()
   try {
-    const sql = 'INSERT INTO clients (name, cpf, phone, email, address) VALUES ($1, $2, $3, $4, $5) RETURNING *'
-    const values = [client.name, client.cpf, client.phone, client.email, client.address]
-    const response = await connection.query(sql, values)
-  
-    return response?.rows?.[0]
+    return await Client.create(client)
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
-async  function getAllClients () {
-  const connection = await connect()
+async function getAllClients () {
   try {
-    const response = await connection.query('SELECT * FROM clients')
-
-    return  response.rows
+    return await Client.findAll()
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
-async  function getClient (id) {
-  const connection = await connect()
+async function getClient (id) {
   try {
-    const response = await connection.query(`SELECT * FROM clients WHERE client_id=$1`,[id])
-
-    return response?.rows?.[0]
+    return await Client.findByPk(id)
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
-async  function updateClient (client) {
-  const connection = await connect()
+async function updateClient (client) {
   try {
-    const sql = 'UPDATE clients SET name = $1, cpf= $2, phone = $3, email = $4, address = $5 WHERE client_id=$6 RETURNING *'
-    const values = [client.name, client.cpf, client.phone, client.email, client.address, client.client_id]
-    const response = await connection.query(sql, values)
-  
-    return response?.rows?.[0]
+    await Client.update(client, {
+      where: { clientId: client.clientId }
+    })
+
+    return await getClient(client.clientId)
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
-async  function deleteClient (id) {
-  const connection = await connect()
+async function deleteClient (id) {
   try {
-    const r = await connection.query(`DELETE FROM clients WHERE client_id=$1`,[id])
+    await Client.destroy({
+      where: { clientId: id }
+    })
 
     return {
       'message': 'Deleted successfully',
     }
   } catch (error) {
-    throw error;
-  } finally {
-    connection.release()
+    throw error
   }
 }
 
