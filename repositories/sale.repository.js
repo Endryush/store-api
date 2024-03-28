@@ -61,6 +61,21 @@ async function getSalesByProductId (productId) {
   }
 }
 
+async function getSalesBySupplierId (supplierId) {
+  try {
+    return await Sale.findAll({
+      include: [
+        {
+          model: Product,
+          where: { supplierId }
+        }
+      ]
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
 async function deleteSale (id) {
   try {
     await Sale.destroy({
@@ -81,5 +96,6 @@ export default {
   getSale,
   updateSale,
   deleteSale,
-  getSalesByProductId
+  getSalesByProductId,
+  getSalesBySupplierId
 }

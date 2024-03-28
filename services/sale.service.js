@@ -2,8 +2,12 @@ import SaleRepository from "../repositories/sale.repository.js"
 import ClientRepository from "../repositories/client.repository.js"
 import ProductRepository from "../repositories/product.repository.js"
 
-async function getSales (productId) {
-  return productId ? await SaleRepository.getSalesByProductId(productId) : await SaleRepository.getSales()
+async function getSales (productId, supplierId) {
+  if (productId) return await SaleRepository.getSalesByProductId(productId)
+
+  if (supplierId) return await SaleRepository.getSalesBySupplierId(supplierId)
+
+  return await SaleRepository.getSales()
 }
 // validar se tem estoque e diminuir estoque
 async function createSale (sale) {
