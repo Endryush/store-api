@@ -9,5 +9,7 @@ router
   .get('/:id', ProductController.getProduct)
   .put( '/', ProductController.updateProduct)
   .delete('/:id', ProductController.deleteProduct)
+  .post('/info', ProductController.createProductInfo)
+  .put('/info', ProductController.updateProductInfo)
 
 export default router

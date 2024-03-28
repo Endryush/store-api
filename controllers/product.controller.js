@@ -67,10 +67,37 @@ async function deleteProduct (req, res, next) {
   }
 }
 
+async function createProductInfo ( req, res, next) {
+  try {
+    let productInfo = req.body
+    if (!productInfo.productId) throw new Error('Product ID é obrigatório')
+
+    res.status(200).send(await ProductService.createProductInfo(productInfo))
+    logger.info('POST /product/info', + productInfo)
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function updateProductInfo ( req, res, next) {
+  try {
+    let productInfo = req.body
+    if (!productInfo.productId) throw new Error('Product ID é obrigatório')
+
+    res.status(200).send(await ProductService.updateProductInfo(productInfo))
+    logger.info('PUT /product/info', + productInfo)
+  } catch (error) {
+    next(error)
+  }
+}
+
+
 export default {
   createProduct,
   getAllProducts,
   getProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  createProductInfo,
+  updateProductInfo
 }

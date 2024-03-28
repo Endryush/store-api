@@ -1,4 +1,5 @@
 import ProductRepository from "../repositories/product.repository.js"
+import productInfoRepository from "../repositories/productInfo.repository.js"
 import saleRepository from "../repositories/sale.repository.js"
 import SupplierRepository from "../repositories/supplier.repository.js"
 
@@ -14,7 +15,10 @@ async function createProduct (product) {
 }
 
 async function getProduct (id) {
-  return await ProductRepository.getProduct(id)
+  const product = await ProductRepository.getProduct(id)
+  product.info = await productInfoRepository.getProductInfo(parseInt(id))
+
+  return product
 }
 
 async function updateProduct (product) {
@@ -29,10 +33,20 @@ async function deleteProduct (id) {
   if (sales?.length > 0) throw new Error('Its not possible to delete product because it has sales registered')
   return await ProductRepository.deleteProduct(id)
 }
+
+async function createProductInfo (productInfo) {
+  return await productInfoRepository.createProductInfo(productInfo) 
+}
+
+async function updateProductInfo (productInfo) {
+  return await productInfoRepository.updateProductInfo(productInfo)
+}
 export default {
   getAllProducts,
   createProduct,
   getProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  createProductInfo,
+  updateProductInfo
 }
