@@ -11,5 +11,7 @@ router
   .delete('/:id', ProductController.deleteProduct)
   .post('/info', ProductController.createProductInfo)
   .put('/info', ProductController.updateProductInfo)
+  .post('/review', ProductController.createReview)
+  .delete('/:id/review/:index', ProductController.deleteReview)
 
 export default router

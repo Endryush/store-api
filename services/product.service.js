@@ -41,6 +41,16 @@ async function createProductInfo (productInfo) {
 async function updateProductInfo (productInfo) {
   return await productInfoRepository.updateProductInfo(productInfo)
 }
+
+async function createReview(review, productId){ 
+  return await productInfoRepository.createReview(review, productId)
+}
+
+async function deleteReview (productId, index) {
+  if (!await productInfoRepository.getProductInfo(parseInt(productId))) throw new Error('product not exists')
+  return await productInfoRepository.deleteReview(parseInt(productId), index)
+}
+
 export default {
   getAllProducts,
   createProduct,
@@ -48,5 +58,7 @@ export default {
   updateProduct,
   deleteProduct,
   createProductInfo,
-  updateProductInfo
+  updateProductInfo,
+  createReview,
+  deleteReview
 }

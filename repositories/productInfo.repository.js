@@ -39,8 +39,31 @@ async function getProductInfo (productId) {
   }
 }
 
+async function createReview (review, productId) {
+  try {
+    const productInfo = await getProductInfo(productId)
+    productInfo.reviews.push(review)
+    return await updateProductInfo(productInfo)
+  } catch (error) {
+    throw error
+  }
+}
+
+async function deleteReview (productId, index) {
+  try {
+    const productInfo = await getProductInfo(productId)
+    productInfo.reviews.splice(index, 1)
+
+    return await updateProductInfo(productInfo)
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   createProductInfo,
   updateProductInfo,
-  getProductInfo
+  getProductInfo,
+  createReview,
+  deleteReview
 }
