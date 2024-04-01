@@ -1,6 +1,12 @@
-import mongodb from "mongodb"
+import mongoose from "mongoose"
 
-export function getClient () {
+async function connect () {
   const uri =  process.env.DB_MONGO
-  return new mongodb.MongoClient(uri)
+  return await mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'store'
+  })
 }
+
+export { connect }

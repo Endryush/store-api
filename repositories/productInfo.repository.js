@@ -1,53 +1,46 @@
-import { getClient } from "./mongo.db.js";
-
+import { connect } from "./mongo.db.js";
+import ProductInfoSchema from "../schemas/productInfo.schema.js";
+ 
 async function createProductInfo (productInfo) {
-  const  client = getClient();
   try {
-    await client.connect()
-    return await client.db('store').collection('productInfo').insertOne(productInfo)
+    const mongoose = await connect()
+    const ProductInfo = mongoose.model('ProductInfo', ProductInfoSchema);
+    productInfo = new ProductInfo(productInfo)
+    return await productInfo.save(productInfo)
   } catch (error) {
     throw error
-  } finally {
-    await client.close()
-  }
+  } 
 }
 
 async function updateProductInfo (productInfo) {
-  const  client = getClient();
   try {
-    await client.connect()
-    return await client.db('store').collection('productInfo').updateOne(
-      { productId: productInfo.productId },
-      { $set: { ...productInfo } }
-    )
+    const mongoose = await connect()
+    const ProductInfo = mongoose.model('ProductInfo', ProductInfoSchema);
+    return await ProductInfo.findOneAndUpdate({ productId: productInfo.productId}, productInfo)
   } catch (error) {
     throw error
-  } finally {
-    await client.close()
   }
 }
 
 async function getProductInfo (productId) {
-  const  client = getClient();
   try {
-    await client.connect()
-    return await client.db('store').collection('productInfo').findOne({ productId })
+    const mongoose = await connect()
+    const ProductInfo = mongoose.model('ProductInfo', ProductInfoSchema);
+
+    return await ProductInfo.findOne({ productId }).exec()
   } catch (error) {
     throw error
-  } finally {
-    await client.close()
   }
 }
 
 async function getAllProductInfo () {
-  const  client = getClient();
   try {
-    await client.connect()
-    return await client.db('store').collection('productInfo').find({}).toArray()
+    const mongoose = await connect()
+    const ProductInfo = mongoose.model('ProductInfo', ProductInfoSchema);
+    const t = await ProductInfo.find().exec()
+    return await ProductInfo.find().exec()
   } catch (error) {
     throw error
-  } finally {
-    await client.close()
   }
 }
 
@@ -73,14 +66,13 @@ async function deleteReview (productId, index) {
 }
 
 async function deleteProductInfo (productId) {
-  const  client = getClient();
   try {
-    await client.connect()
-    return await client.db('store').collection('productInfo').deleteOne({ productId })
+    const mongoose = await connect()
+    const ProductInfo = mongoose.model('ProductInfo', ProductInfoSchema);
+
+    return ProductInfo.deleteOne({ productId }).exec()
   } catch (error) {
     throw error
-  } finally {
-    await client.close()
   }
 }
 
