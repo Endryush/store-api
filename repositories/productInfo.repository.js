@@ -37,7 +37,6 @@ async function getAllProductInfo () {
   try {
     const mongoose = await connect()
     const ProductInfo = mongoose.model('ProductInfo', ProductInfoSchema);
-    const t = await ProductInfo.find().exec()
     return await ProductInfo.find().exec()
   } catch (error) {
     throw error
