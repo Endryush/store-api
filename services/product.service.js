@@ -1,5 +1,5 @@
 import ProductRepository from "../repositories/product.repository.js"
-import productInfoRepository from "../repositories/productInfo.repository.js"
+import ProductInfoRepository from "../repositories/productInfo.repository.js"
 import saleRepository from "../repositories/sale.repository.js"
 import SupplierRepository from "../repositories/supplier.repository.js"
 
@@ -16,7 +16,7 @@ async function createProduct (product) {
 
 async function getProduct (id) {
   const product = await ProductRepository.getProduct(id)
-  product.info = await productInfoRepository.getProductInfo(parseInt(id))
+  product.info = await ProductInfoRepository.getProductInfo(parseInt(id))
 
   return product
 }
@@ -35,22 +35,29 @@ async function deleteProduct (id) {
 }
 
 async function createProductInfo (productInfo) {
-  return await productInfoRepository.createProductInfo(productInfo) 
+  return await ProductInfoRepository.createProductInfo(productInfo) 
 }
 
 async function updateProductInfo (productInfo) {
-  return await productInfoRepository.updateProductInfo(productInfo)
+  return await ProductInfoRepository.updateProductInfo(productInfo)
 }
 
 async function createReview(review, productId){ 
-  return await productInfoRepository.createReview(review, productId)
+  return await ProductInfoRepository.createReview(review, productId)
 }
 
 async function deleteReview (productId, index) {
-  if (!await productInfoRepository.getProductInfo(parseInt(productId))) throw new Error('product not exists')
-  return await productInfoRepository.deleteReview(parseInt(productId), index)
+  if (!await ProductInfoRepository.getProductInfo(parseInt(productId))) throw new Error('product not exists')
+  return await ProductInfoRepository.deleteReview(parseInt(productId), index)
 }
 
+async function getAllProductInfo () {
+  return await ProductInfoRepository.getAllProductInfo()
+}
+
+async function deleteProductInfo (productId) {
+  return await ProductInfoRepository.deleteProductInfo(productId)
+}
 export default {
   getAllProducts,
   createProduct,
@@ -60,5 +67,7 @@ export default {
   createProductInfo,
   updateProductInfo,
   createReview,
-  deleteReview
+  deleteReview,
+  getAllProductInfo,
+  deleteProductInfo
 }
