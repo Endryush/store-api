@@ -33,10 +33,17 @@ app.use('/client', clientsRouter)
 app.use('/supplier', suppliersRouter)
 app.use('/product', productsRouter)
 app.use('/sale', salesRouter)
+app.get('/health-check', (req, res) => {
+  try {
+    res.status(200).send('Server is running')
+  } catch (error) {
+    res.status(500).send(`Error: ${error}`)
+  }
+})
 
 app.use((error, req, res, next) => {
   logger.error(`Error processing request: ${req.method} - ${req.baseUrl} - ${error.message ?? JSON.stringify(error)}`)
   res.status(400).send({ error: error.message ?? error })
 })
 
-app.listen(3000, () => console.log('API started on port 3000'))
+app.listen(5678, () => console.log('API started on port 5678'))

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  nodejs:
+    image: node_store_api
+    restart: always
+    build: .
+    ports:
+      - "5678:5678"
+    environment:
+      - DB_URL=${DB_URL}
+      - DB_MONGO=${DB_MONGO}
