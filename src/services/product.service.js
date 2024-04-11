@@ -16,7 +16,9 @@ async function createProduct (product) {
 
 async function getProduct (id) {
   const product = await ProductRepository.getProduct(id)
-  product.info = await ProductInfoRepository.getProductInfo(parseInt(id))
+  if (product) {
+    product.info = await ProductInfoRepository.getProductInfo(parseInt(id))
+  }
 
   return product
 }
@@ -31,6 +33,9 @@ async function updateProduct (product) {
 async function deleteProduct (id) {
   const sales = await saleRepository.getSalesByProductId(id)
   if (sales?.length > 0) throw new Error('Its not possible to delete product because it has sales registered')
+  const product = await ProductRepository.getProduct(id)
+  if (!product) throw new Error("Product doesn't exist")
+
   return await ProductRepository.deleteProduct(id)
 }
 

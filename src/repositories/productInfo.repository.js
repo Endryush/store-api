@@ -6,7 +6,9 @@ async function createProductInfo (productInfo) {
     const mongoose = await connect()
     const ProductInfo = mongoose.model('ProductInfo', ProductInfoSchema);
     productInfo = new ProductInfo(productInfo)
-    return await productInfo.save(productInfo)
+    await productInfo.save(productInfo)
+
+    return 
   } catch (error) {
     throw error
   } 
